@@ -1,6 +1,8 @@
 package com.example.myspringbootapp.repository;
 
 import com.example.myspringbootapp.model.Customer;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Table;
@@ -17,6 +19,8 @@ import static org.jooq.impl.DSL.table;
 
 @Repository
 @Profile("prod")
+@RequiredArgsConstructor
+@Slf4j
 public class JdbcCustomerRepository implements CustomerRepository {
 
     private static final Table<?> CUSTOMER = table(name("customer"));
@@ -27,12 +31,9 @@ public class JdbcCustomerRepository implements CustomerRepository {
 
     private final DSLContext dsl;
 
-    public JdbcCustomerRepository(DSLContext dsl) {
-        this.dsl = dsl;
-    }
-
     @Override
     public Optional<Customer> findById(Long id) {
+        log.debug("Executing jOOQ query: findById({})", id);
         return baseQuery()
                 .where(ID.eq(id))
                 .fetchOptional(this::toCustomer);
@@ -40,6 +41,7 @@ public class JdbcCustomerRepository implements CustomerRepository {
 
     @Override
     public List<Customer> findAll() {
+        log.debug("Executing jOOQ query: findAll()");
         return baseQuery()
                 .orderBy(ID.asc())
                 .fetch(this::toCustomer);
@@ -47,6 +49,7 @@ public class JdbcCustomerRepository implements CustomerRepository {
 
     @Override
     public List<Customer> findByFirstName(String firstName) {
+        log.debug("Executing jOOQ query: findByFirstName({})", firstName);
         return baseQuery()
                 .where(FIRST_NAME.eq(firstName))
                 .orderBy(ID.asc())
@@ -55,6 +58,7 @@ public class JdbcCustomerRepository implements CustomerRepository {
 
     @Override
     public List<Customer> findByDateOfBirth(LocalDate dateOfBirth) {
+        log.debug("Executing jOOQ query: findByDateOfBirth({})", dateOfBirth);
         return baseQuery()
                 .where(DATE_OF_BIRTH.eq(dateOfBirth))
                 .orderBy(ID.asc())

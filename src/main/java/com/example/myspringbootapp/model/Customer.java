@@ -1,11 +1,15 @@
 package com.example.myspringbootapp.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.time.LocalDate;
 
-public record Customer(
-        Long id,
-        String firstName,
-        String lastName,
-        LocalDate dateOfBirth
-) {
+@Data
+@AllArgsConstructor
+public class Customer {
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private LocalDate dateOfBirth;
 }
