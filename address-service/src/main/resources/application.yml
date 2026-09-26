@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: address-service
+  profiles:
+    active: dev
+
+logging:
+  level:
+    root: INFO
+    org.jooq: INFO
+    org.springframework.web: DEBUG
+    org.flywaydb: INFO
