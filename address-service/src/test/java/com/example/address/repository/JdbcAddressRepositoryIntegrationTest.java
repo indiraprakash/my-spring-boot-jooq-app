@@ -57,11 +57,13 @@ class JdbcAddressRepositoryIntegrationTest {
 
     @Test
     void repositoryPersistsAnAddressAndReturnsGeneratedId() {
-        Address address = new Address(null, 1L, "10 Test St", "Boston", "MA", "02108", "USA");
+        Address newAddress = new Address(null, 1L, "10 Test St", "Boston", "MA", "02108", "USA");
 
-        Long id = addressRepository.save(address);
+        Long generatedId = addressRepository.save(newAddress);
 
-        assertThat(id).isPositive();
-        assertThat(addressRepository.findById(id)).contains(address.withId(id));
+        assertThat(generatedId).isPositive();
+        
+        Address savedAddress = new Address(generatedId, 1L, "10 Test St", "Boston", "MA", "02108", "USA");
+        assertThat(addressRepository.findById(generatedId)).contains(savedAddress);
     }
 }
