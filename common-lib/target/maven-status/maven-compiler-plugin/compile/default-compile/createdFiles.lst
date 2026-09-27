@@ -1,0 +1,3 @@
+com/example/common/exception/ResourceNotFoundException.class
+com/example/common/exception/GlobalExceptionHandler.class
+com/example/common/exception/GlobalExceptionHandler$ErrorResponse.class
