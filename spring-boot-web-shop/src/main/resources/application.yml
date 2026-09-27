@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: spring-boot-web-shop
+  profiles:
+    active: prod
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/postgresql
