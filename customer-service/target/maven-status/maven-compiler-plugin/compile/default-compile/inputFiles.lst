@@ -1,0 +1,8 @@
+/home/runner/work/my-spring-boot-jooq-app/my-spring-boot-jooq-app/customer-service/src/main/java/com/example/customer/CustomerServiceApplication.java
+/home/runner/work/my-spring-boot-jooq-app/my-spring-boot-jooq-app/customer-service/src/main/java/com/example/customer/config/CustomerConfig.java
+/home/runner/work/my-spring-boot-jooq-app/my-spring-boot-jooq-app/customer-service/src/main/java/com/example/customer/controller/CustomerController.java
+/home/runner/work/my-spring-boot-jooq-app/my-spring-boot-jooq-app/customer-service/src/main/java/com/example/customer/model/Customer.java
+/home/runner/work/my-spring-boot-jooq-app/my-spring-boot-jooq-app/customer-service/src/main/java/com/example/customer/repository/CustomerRepository.java
+/home/runner/work/my-spring-boot-jooq-app/my-spring-boot-jooq-app/customer-service/src/main/java/com/example/customer/repository/JdbcCustomerRepository.java
+/home/runner/work/my-spring-boot-jooq-app/my-spring-boot-jooq-app/customer-service/src/main/java/com/example/customer/repository/MockCustomerRepository.java
+/home/runner/work/my-spring-boot-jooq-app/my-spring-boot-jooq-app/customer-service/src/main/java/com/example/customer/service/CustomerService.java
