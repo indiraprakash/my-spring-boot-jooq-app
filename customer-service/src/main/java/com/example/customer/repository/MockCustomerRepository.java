@@ -26,7 +26,7 @@ public class MockCustomerRepository implements CustomerRepository {
     public Optional<Customer> findById(Long id) {
         log.debug("Mock repository: findById({})", id);
         return CUSTOMERS.stream()
-                .filter(customer -> customer.getId().equals(id))
+                .filter(customer -> customer.id().equals(id))
                 .findFirst();
     }
 
@@ -40,7 +40,7 @@ public class MockCustomerRepository implements CustomerRepository {
     public List<Customer> findByFirstName(String firstName) {
         log.debug("Mock repository: findByFirstName({})", firstName);
         return CUSTOMERS.stream()
-                .filter(customer -> customer.getFirstName().equalsIgnoreCase(firstName))
+                .filter(customer -> customer.firstName().equalsIgnoreCase(firstName))
                 .toList();
     }
 
@@ -48,7 +48,7 @@ public class MockCustomerRepository implements CustomerRepository {
     public List<Customer> findByDateOfBirth(LocalDate dateOfBirth) {
         log.debug("Mock repository: findByDateOfBirth({})", dateOfBirth);
         return CUSTOMERS.stream()
-                .filter(customer -> customer.getDateOfBirth().equals(dateOfBirth))
+                .filter(customer -> customer.dateOfBirth().equals(dateOfBirth))
                 .toList();
     }
 }

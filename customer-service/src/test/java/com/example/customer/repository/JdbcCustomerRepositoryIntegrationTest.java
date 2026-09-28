@@ -42,7 +42,7 @@ class JdbcCustomerRepositoryIntegrationTest {
     void flywayRunsAgainstPostgresAndLoadsSeedData() {
         assertThat(customerRepository.findAll())
                 .hasSize(3)
-                .extracting(Customer::getFirstName)
+                .extracting(Customer::firstName)
                 .containsExactly("John", "Jane", "Alice");
     }
 
@@ -51,8 +51,8 @@ class JdbcCustomerRepositoryIntegrationTest {
         assertThat(customerRepository.findByFirstName("Jane"))
                 .singleElement()
                 .satisfies(customer -> {
-                    assertThat(customer.getLastName()).isEqualTo("Smith");
-                    assertThat(customer.getDateOfBirth()).isEqualTo(LocalDate.of(1987, 11, 14));
+                    assertThat(customer.lastName()).isEqualTo("Smith");
+                    assertThat(customer.dateOfBirth()).isEqualTo(LocalDate.of(1987, 11, 14));
                 });
     }
 }
