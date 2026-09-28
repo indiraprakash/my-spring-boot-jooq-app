@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 @Configuration
-@Profile("prod")
+@Profile("!dev")
 public class CustomerConfig {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerConfig.class);
