@@ -1,6 +1,7 @@
 package com.example.customer.repository;
 
 import com.example.customer.model.Customer;
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,13 +27,22 @@ class JdbcCustomerRepositoryIntegrationTest {
             .withUsername("postgres")
             .withPassword("postgres");
 
+    static {
+        POSTGRES.start();
+        Flyway.configure()
+                .dataSource(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
+                .locations("classpath:db/migration/postgresql")
+                .load()
+                .migrate();
+    }
+
     @DynamicPropertySource
     static void configureDatabase(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", POSTGRES::getJdbcUrl);
         registry.add("spring.datasource.username", POSTGRES::getUsername);
         registry.add("spring.datasource.password", POSTGRES::getPassword);
         registry.add("spring.datasource.driver-class-name", POSTGRES::getDriverClassName);
-        registry.add("spring.flyway.enabled", () -> true);
+        registry.add("spring.flyway.enabled", () -> false);
     }
 
     @Autowired
@@ -42,7 +52,7 @@ class JdbcCustomerRepositoryIntegrationTest {
     void flywayRunsAgainstPostgresAndLoadsSeedData() {
         assertThat(customerRepository.findAll())
                 .hasSize(3)
-                .extracting(Customer::getFirstName)
+                .extracting(Customer::firstName)
                 .containsExactly("John", "Jane", "Alice");
     }
 
@@ -51,8 +61,8 @@ class JdbcCustomerRepositoryIntegrationTest {
         assertThat(customerRepository.findByFirstName("Jane"))
                 .singleElement()
                 .satisfies(customer -> {
-                    assertThat(customer.getLastName()).isEqualTo("Smith");
-                    assertThat(customer.getDateOfBirth()).isEqualTo(LocalDate.of(1987, 11, 14));
+                    assertThat(customer.lastName()).isEqualTo("Smith");
+                    assertThat(customer.dateOfBirth()).isEqualTo(LocalDate.of(1987, 11, 14));
                 });
     }
 }

@@ -1,7 +1,8 @@
 package com.example.customer.repository;
 
 import com.example.customer.model.Customer;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +12,9 @@ import java.util.Optional;
 
 @Repository
 @Profile("dev")
-@Slf4j
 public class MockCustomerRepository implements CustomerRepository {
+
+    private static final Logger log = LoggerFactory.getLogger(MockCustomerRepository.class);
 
     private static final List<Customer> CUSTOMERS = List.of(
             new Customer(1L, "John", "Doe", LocalDate.of(1990, 5, 21)),
@@ -26,7 +28,7 @@ public class MockCustomerRepository implements CustomerRepository {
     public Optional<Customer> findById(Long id) {
         log.debug("Mock repository: findById({})", id);
         return CUSTOMERS.stream()
-                .filter(customer -> customer.getId().equals(id))
+                .filter(customer -> customer.id().equals(id))
                 .findFirst();
     }
 
@@ -40,7 +42,7 @@ public class MockCustomerRepository implements CustomerRepository {
     public List<Customer> findByFirstName(String firstName) {
         log.debug("Mock repository: findByFirstName({})", firstName);
         return CUSTOMERS.stream()
-                .filter(customer -> customer.getFirstName().equalsIgnoreCase(firstName))
+                .filter(customer -> customer.firstName().equalsIgnoreCase(firstName))
                 .toList();
     }
 
@@ -48,7 +50,7 @@ public class MockCustomerRepository implements CustomerRepository {
     public List<Customer> findByDateOfBirth(LocalDate dateOfBirth) {
         log.debug("Mock repository: findByDateOfBirth({})", dateOfBirth);
         return CUSTOMERS.stream()
-                .filter(customer -> customer.getDateOfBirth().equals(dateOfBirth))
+                .filter(customer -> customer.dateOfBirth().equals(dateOfBirth))
                 .toList();
     }
 }
