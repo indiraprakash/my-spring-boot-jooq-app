@@ -27,18 +27,22 @@ class JdbcCustomerRepositoryIntegrationTest {
             .withUsername("postgres")
             .withPassword("postgres");
 
+    static {
+        POSTGRES.start();
+        Flyway.configure()
+                .dataSource(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
+                .locations("classpath:db/migration/postgresql")
+                .load()
+                .migrate();
+    }
+
     @DynamicPropertySource
     static void configureDatabase(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", POSTGRES::getJdbcUrl);
         registry.add("spring.datasource.username", POSTGRES::getUsername);
         registry.add("spring.datasource.password", POSTGRES::getPassword);
         registry.add("spring.datasource.driver-class-name", POSTGRES::getDriverClassName);
-        registry.add("spring.flyway.enabled", () -> true);
-        Flyway.configure()
-                .dataSource(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
-                .locations("classpath:db/migration/postgresql")
-                .load()
-                .migrate();
+        registry.add("spring.flyway.enabled", () -> false);
     }
 
     @Autowired
