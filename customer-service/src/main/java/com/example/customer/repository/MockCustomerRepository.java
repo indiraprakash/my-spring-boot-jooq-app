@@ -1,7 +1,8 @@
 package com.example.customer.repository;
 
 import com.example.customer.model.Customer;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +12,9 @@ import java.util.Optional;
 
 @Repository
 @Profile("dev")
-@Slf4j
 public class MockCustomerRepository implements CustomerRepository {
+
+    private static final Logger log = LoggerFactory.getLogger(MockCustomerRepository.class);
 
     private static final List<Customer> CUSTOMERS = List.of(
             new Customer(1L, "John", "Doe", LocalDate.of(1990, 5, 21)),

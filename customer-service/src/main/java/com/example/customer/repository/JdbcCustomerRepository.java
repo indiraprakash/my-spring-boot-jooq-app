@@ -1,11 +1,11 @@
 package com.example.customer.repository;
 
 import com.example.customer.model.Customer;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Table;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -19,9 +19,9 @@ import static org.jooq.impl.DSL.table;
 
 @Repository
 @Profile("prod")
-@RequiredArgsConstructor
-@Slf4j
 public class JdbcCustomerRepository implements CustomerRepository {
+
+    private static final Logger log = LoggerFactory.getLogger(JdbcCustomerRepository.class);
 
     private static final Table<?> CUSTOMER = table(name("customer"));
     private static final Field<Long> ID = field(name("id"), Long.class);
@@ -30,6 +30,10 @@ public class JdbcCustomerRepository implements CustomerRepository {
     private static final Field<LocalDate> DATE_OF_BIRTH = field(name("date_of_birth"), LocalDate.class);
 
     private final DSLContext dsl;
+
+    public JdbcCustomerRepository(DSLContext dsl) {
+        this.dsl = dsl;
+    }
 
     @Override
     public Optional<Customer> findById(Long id) {
