@@ -1,6 +1,7 @@
 package com.example.address.repository;
 
 import com.example.address.model.Address;
+import com.example.mockdata.address.MockAddressData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -15,11 +16,17 @@ import java.util.concurrent.atomic.AtomicLong;
 @Slf4j
 public class MockAddressRepository implements AddressRepository {
 
-    private static final List<Address> ADDRESSES = new ArrayList<>(List.of(
-            new Address(1L, 1L, "123 Main St", "New York", "NY", "10001", "USA"),
-            new Address(2L, 2L, "456 Oak Ave", "Los Angeles", "CA", "90001", "USA"),
-            new Address(3L, 3L, "789 Pine Rd", "Chicago", "IL", "60601", "USA")
-    ));
+    private static final List<Address> ADDRESSES = new ArrayList<>(MockAddressData.addresses().stream()
+            .map(address -> new Address(
+                    address.id(),
+                    address.customerId(),
+                    address.street(),
+                    address.city(),
+                    address.state(),
+                    address.postalCode(),
+                    address.country()
+            ))
+            .toList());
 
     private static final AtomicLong ID_GENERATOR = new AtomicLong(3);
 
