@@ -4,6 +4,7 @@ spring:
       - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
       - org.springframework.boot.jdbc.autoconfigure.JdbcClientAutoConfiguration
       - org.springframework.boot.jdbc.autoconfigure.JdbcTemplateAutoConfiguration
+      - org.springframework.boot.jooq.autoconfigure.JooqAutoConfiguration
   flyway:
     enabled: false
 
